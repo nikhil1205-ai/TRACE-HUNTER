@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Network Image Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='Net_style.css') }}">
+</head>
+<body>
+    <br><br>
+    <header>
+        <div class="logo">🔎 Network Image Analyzer <span style="color: white;">Analyzer</span></div>
+    </header>
+
+  <!-- Main Section -->
+  <main class="main-container">
+    <!-- <h1>Malware Detection</h1> -->
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab {% if active_tab == 'file' %}active{% endif %}" onclick="showPanel('filePanel', this)">Network Analyzer</button>
+      <button class="tab {% if active_tab == 'url' %}active{% endif %}" onclick="showPanel('urlPanel', this)">Image Analyzer</button>
+    </div>
+
+    <!-- Network PANEL -->
+    <div id="filePanel" class="panel {% if active_tab == 'file' %}active{% endif %}">
+      <h2>Upload Files for Network Scan</h2>
+      <div class="upload-grid">
+        <form id="uploadForm" action="/net" method="POST" enctype="multipart/form-data">
+          <div class="upload-box">
+            <label for="csvFile">📄 Upload CSV Logs</label>
+            <input type="file" id="csvFile" name="csvFile" accept=".csv,.xlsx" style="display: none;">
+            <button type="button" class="btn" onclick="document.getElementById('csvFile').click()">Upload CSVLogs</button>
+          </div>
+        </form>
+        <script>
+          document.getElementById('csvFile').addEventListener('change', function () {
+            document.getElementById('uploadForm').submit(); });
+        </script>
+      </div>
+      <br>
+      {% if result %}
+          <div class="prediction-result">        
+            <h3 style="display:block;">Prediction: {{ result }}</h3>
+          </div>
+          <br>
+          <img src="static/prediction_Network_probability.png" alt="Probability">
+          <br>
+          <img src="static/feature_Network_importances.png" alt="feature importances">
+      {% endif %}
+    </div>
+
+
+
+    <div id="urlPanel" class="panel {% if active_tab == 'url' %}active{% endif %}">
+        <h2>Upload an Image</h2>
+        <form action="/scan_image" method="POST" enctype="multipart/form-data">
+          <div class="upload-box">
+            <input type="file" name="image" id="image" accept="image/*" class="file-input" required>
+            <button type="submit" class="btn">Scan Image</button>
+          </div>
+        </form>
+              {% if scanned %}
+                <!-- File Info -->
+                <div class="prediction-result-url">
+                  <h2>🗂 File Info</h2>
+                  <ul>
+                    {% for k, v in file_info.items() %}
+                      <li><b>{{ k }}</b>: {{ v }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+
+                <!-- Metadata -->
+                <div class="prediction-result-url">
+                  <h2>📑 EXIF Metadata</h2>
+                  {% if exif_data %}
+                    <ul>
+                      {% for k, v in exif_data.items() %}
+                        <li><b>{{ k }}</b>: {{ v }}</li>
+                      {% endfor %}
+                    </ul>
+                  {% else %}
+                    <p>No EXIF metadata found.</p>
+                  {% endif %}
+                </div>
+
+                <!-- GPS Info -->
+                <div class="prediction-result-url">
+                  <h2>📍 GPS Location</h2>
+                  {% if gps_data %}
+                    <ul>
+                      {% for k, v in gps_data.items() %}
+                        <li><b>{{ k }}</b>: {{ v }}</li>
+                      {% endfor %}
+                    </ul>
+                  {% else %}
+                    <p>No GPS location data found.</p>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+    </div>
+
+    </main>
+  
+  {% include 'chatbot.html' %}
+  <!-- Footer -->
+    <br><br><br><br><br><br>br>
+  <footer>
+    <p>&copy; 2025 TraceHunter Inc. All Rights Reserved.</p>
+  </footer>
+  <!-- JavaScript -->
+  <script>
+    function showPanel(panelId, element) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(panelId).classList.add('active');
+      element.classList.add('active');
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,132 @@
+<!-- chatbot.html -->
+<div id="chatbot-icon">🤖</div>
+<div id="chat-window">
+    <!-- <div id="chat-header">Gemini Chatbot</div> -->
+    <div id="chat-header">
+        TraceBot
+        <span id="chat-close">&times;</span>
+    </div>
+    <div id="chat-body"></div>
+    <div id="chat-input">
+        <input type="text" id="question" placeholder="Type your question...">
+        <button onclick="sendQuestion()">Send</button>
+    </div>
+</div>
+
+
+<style>
+#chatbot-icon {
+  position: fixed;
+  bottom: 150px;
+  right: 230px;
+  background: #0ff; 
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: #000;
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.5);
+}
+#chat-window {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 400px; /* medium width */
+  max-height: 500px;
+  background: #1e1e1e;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+#chat-header {
+  background: #0ff;
+  color: #000;
+  padding: 12px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+}
+#chat-close {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+}
+#chat-body {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  color: #ddd;
+}
+#chat-input {
+  display: flex;
+  border-top: 1px solid #333;
+}
+#chat-input input {
+  flex: 1;
+  padding: 20px;
+  border: none;
+  outline: none;
+  background: #2b2b2b;
+  color: white;
+  font-size: medium;
+}
+#chat-input button {
+  padding: 10px;
+  border: none;
+  background: #0ff;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+.chat-message {
+  margin-bottom: 15px;
+}
+.chat-message .user {
+  color: #0ff;
+  font-weight: bold;
+}
+.chat-message .ai {
+  color: #ffd700;
+  background: rgb(74, 113, 113);
+}
+</style>
+
+<script>
+const icon=document.getElementById("chatbot-icon");
+const windowChat=document.getElementById("chat-window");
+const chatBody=document.getElementById("chat-body");
+const chatClose = document.getElementById("chat-close");
+
+icon.onclick=()=>{
+    windowChat.style.display = windowChat.style.display==="flex"?"none":"flex";
+};
+chatClose.onclick = () => {
+  windowChat.style.display = "none";
+};
+
+function appendMessage(sender,text){
+    const div=document.createElement("div"); 
+    div.className="chat-message"; 
+    div.innerHTML=`<span style="color:#0ff; font-weight:bold;" class="${sender.toLowerCase()}">${sender}:</span> ${text}`; 
+    chatBody.appendChild(div); chatBody.scrollTop=chatBody.scrollHeight;
+};
+function sendQuestion(){
+    const question=document.getElementById("question").value;
+    if(!question) return;
+    appendMessage("User",question);
+    document.getElementById("question").value="";
+    fetch("/ask",{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({question})})
+    .then(res=>res.json())
+    .then(data=>{appendMessage("TraceBot",data.gemini);});
+}
+</script>

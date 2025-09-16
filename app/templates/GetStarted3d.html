@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TraceHunter</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    /* 3D Matrix Background */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .container {
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #0ff;
+      border-radius: 20px;
+      backdrop-filter: blur(6px);
+      color: #0ff;
+      box-shadow: 0 0 25px #0ff;
+      max-width: 600px;
+    }
+
+    .container h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    .container p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #fff;
+    }
+
+    .start-btn {
+      padding: 12px 30px;
+      font-size: 1rem;
+      border: none;
+      background: #0ff;
+      color: #000;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #0ff;
+      transition: all 0.3s ease;
+    }
+
+    .start-btn:hover {
+      background: #00ffbb;
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #00ffbb;
+    }
+  </style>
+</head>
+<body>
+  <!-- <button class="start-btn" onclick="location.href='scanner.html'">Login</button>
+  <button class="start-btn" onclick="location.href='scanner.html'">Signup</button> -->
+  <canvas id="matrixCanvas"></canvas>
+
+  <div class="container">
+    <h1>TraceHunter</h1>                   
+    <p>" ML-powered malware footprint tracker "</p>
+     <a href="{{ url_for('log') }}">
+     <button class="start-btn" >Get Started</button></a>
+    <!-- <button class="start-btn" onclick="location.href='scanner.html'">Login</button>
+    <button class="start-btn" onclick="location.href='scanner.html'">Signup</button> -->
+  </div>
+
+  <script>
+    // Matrix background animation
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "01".split("");
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0ff";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 40);
+
+    // Resize canvas on window resize
+    window.addEventListener('resize', () => {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    });
+  </script>
+</body>
+</html>

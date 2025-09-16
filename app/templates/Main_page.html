@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MalwareScan</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='Main_page.css') }}">
+</head>
+<body>
+  <div class="matrix-background"></div>
+  <header>
+    <div class="logo">🔰 <span class="blue">MALWARE</span><span class="white">SCAN</span></div>
+    <div class="buttons">
+    {% set shared_url = url_for('log') %}
+    <div class="buttons">
+      <a href="{{ shared_url }}" class="btn">Login</a>
+      <a href="{{ shared_url }}" class="btn">Sign Up</a>
+    </div>
+    </div>
+  </header>
+
+  <main>
+
+    <a href="{{ url_for('mal') }}" class="block malware">
+      <h2>🛡️ Malware Detection</h2><br>
+      <p>Upload memory dumps or CSV logs to detect threats like ransomware and trojans. The system uses machine learning and chatbot help to guide users, even without technical skills.</p>
+    </a>
+
+    <a href="{{ url_for('net') }}" class="block network">
+      <h2>🌐 Network Analysis</h2><br>
+      <p>Upload network traffic logs in CSV format to detect unusual activities or threats. The system analyzes the data and provides easy-to-understand insights with chatbot support.</p>
+    </a>
+
+    
+  </main>
+
+  <footer>
+    <p>&copy; 2025 TraceHunter Inc. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
+
+

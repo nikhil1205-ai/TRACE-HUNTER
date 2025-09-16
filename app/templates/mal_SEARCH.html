@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>URL / IP / Hash Checker</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background: #0f172a; color: white; padding: 50px; }
+    h1 { color: #38bdf8; }
+    input, button { padding: 12px; font-size: 16px; border-radius: 8px; margin: 10px; }
+    input { width: 300px; border: none; outline: none; }
+    button { background: #38bdf8; border: none; cursor: pointer; transition: 0.3s; }
+    button:hover { background: #0ea5e9; color: white; }
+    .result { margin-top: 20px; font-size: 20px; font-weight: bold; }
+    .valid { color: #22c55e; }
+    .invalid { color: #ef4444; }
+  </style>
+</head>
+<body>
+  <h1>🔍 URL / IP / Hash Validator</h1>
+  <input type="text" id="userInput" placeholder="Enter URL, IP, or Hash">
+  <button onclick="checkInput()">Check</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    async function checkInput() {
+      let value = document.getElementById("userInput").value;
+
+      let res = await fetch("http://127.0.0.1:5000/check", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({input: value})
+      });
+
+      let data = await res.json();
+      let resultBox = document.getElementById("result");
+
+      if (data.valid) {
+        resultBox.innerHTML = `✅ Valid ${data.type}`;
+        resultBox.className = "result valid";
+      } else {
+        resultBox.innerHTML = "❌ Invalid Input";
+        resultBox.className = "result invalid";
+      }
+    }
+  </script>
+</body>
+</html>

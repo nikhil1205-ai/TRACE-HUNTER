@@ -1,0 +1,185 @@
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: #000;
+      color: #0ff;
+    }
+
+    /* === MAIN CONTAINER === */
+    .main-container {
+      max-width: 900px;
+      margin: 40px auto;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      text-shadow: 0 0 15px #0ff;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      border: 2px solid #0ff;
+      background: transparent;
+      color: #0ff;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tab.active,
+    .tab:hover {
+      background: #0ff;
+      color: #000;
+    }
+
+    .panel {
+      display: none;
+      padding: 25px;
+      background-color: rgba(0,0,0,0.6);
+      border: 2px solid #0ff;
+      border-radius: 15px;
+      box-shadow: 0 0 15px #0ff;
+      margin-bottom: 30px;
+    }
+
+    .panel.active {
+      display: block;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .upload-grid {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .upload-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 250px;
+    }
+
+    .upload-box label {
+      font-size: 1.2em;
+      margin-bottom: 5px;
+    }
+
+    .input-box {
+      width: 80%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 2px solid #0ff;
+      background: #000;
+      color: #0ff;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      background-color: #0ff;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #0ff;
+      transition: transform 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      background: black;
+      color: #0ff;
+      text-align: center;
+      padding: 15px;
+      border-top: 1px solid #0ff;
+    }
+
+    @media screen and (max-width: 768px) {
+      .upload-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+      .input-box {
+        width: 100%;
+      }
+    }
+
+.prediction-result {
+    margin: 20px auto;
+    padding: 20px 40px;
+    max-width: 400px;
+    text-align: center;
+    border: 2px solid #00ffff;       /* neon border */
+    border-radius: 15px;
+    background: rgba(0, 255, 255, 0.05); /* semi-transparent background */
+    box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff inset;
+    color: #00ffff;                   /* neon text */
+    font-size: 1.5em;
+    font-weight: bold;
+    animation: neonGlow 1.5s ease-in-out infinite alternate;
+}
+
+img {
+  display: block;          /* puts image on its own line */
+  max-width: 80%;          /* image won't exceed 80% of container width */
+  height: auto;            /* keeps aspect ratio */
+  margin: 20px auto;       /* centers image */
+  border-radius: 8px;      /* optional: rounded corners */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* optional: shadow effect */
+}
+
+/* @keyframes neonGlow {
+    0% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset; }
+    100% { box-shadow: 0 0 30px #00ffff, 0 0 40px #00ffff inset; }
+} */
+
+
+.prediction-result-url {
+    margin: 20px auto;
+    padding: 20px 40px;
+    max-width: 800px;
+    text-align: left;
+    border: 2px solid #00ffff;       /* neon border */
+    border-radius: 15px;
+    background: rgba(0, 255, 255, 0.05); /* semi-transparent background */
+    box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff inset;
+    color: #00ffff;                   /* neon text */
+    font-size: 1.5em;
+    font-weight: bold;
+    animation: neonGlow 1.5s ease-in-out infinite alternate;
+}
+
+.prediction-result-url p{
+   text-align: center;
+   
+}
+

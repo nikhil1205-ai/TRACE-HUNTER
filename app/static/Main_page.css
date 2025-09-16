@@ -1,0 +1,150 @@
+/* Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: black;
+  color: cyan;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Matrix Background */
+.matrix-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0, 255, 255, 0.05) 0,
+    rgba(0, 255, 255, 0.05) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  z-index: 0;
+  animation: scrollMatrix 10s linear infinite;
+}
+@keyframes scrollMatrix {
+  0% {
+    background-position-y: 0;
+  }
+  100% {
+    background-position-y: 100%;
+  }
+}
+
+/* Header */
+header {
+  z-index: 1;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 2px solid cyan;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.logo .blue {
+  color: cyan;
+}
+.logo .white {
+  color: white;
+}
+.buttons .btn {
+  background: transparent;
+  color: cyan;
+  border: 2px solid cyan;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.buttons .btn:hover {
+  background: cyan;
+  color: black;
+}
+
+/* Main content */
+main {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 80vh;
+  z-index: 1;
+  position: relative;
+  padding: 2rem;
+}
+
+a.btn {
+  text-decoration: none;
+  display: inline-block;
+}
+
+
+ 
+.block {
+  width: 40%;
+  height: auto;
+  min-height: 250px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 2px solid cyan;
+  border-radius: 20px;
+  box-shadow: 0 0 20px cyan;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem;
+  transition: transform 0.3s ease;
+  text-decoration: none;
+}
+.block:hover {
+  transform: scale(1.05);
+}
+
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  border-top: 2px solid cyan;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+  position: relative;
+  color: cyan;
+  font-size: 1rem;
+}
+
+
+a .block {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.block h2 {
+  font-size: 1.8rem;
+  color: cyan;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.block p {
+  font-size: 1rem;
+  color: #c5c6c7;
+  margin-top: 0;
+  line-height: 1.9;
+}
+

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Malware Detection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='mal_style.css') }}">
+</head>
+<body>
+    <br><br>
+    <header>
+        <div class="logo">🔎 Malware Detection <span style="color: white;">Analyzer</span></div>
+    </header>
+
+  <!-- Main Section -->
+  <main class="main-container">
+    <!-- <h1>Malware Detection</h1> -->
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab {% if active_tab == 'file' %}active{% endif %}" onclick="showPanel('filePanel', this)">FILE</button>
+      <button class="tab {% if active_tab == 'url' %}active{% endif %}" onclick="showPanel('urlPanel', this)">URL</button>
+      <button class="tab {% if active_tab == 'search' %}active{% endif %}" onclick="showPanel('searchPanel', this)">SEARCH</button>
+    </div>
+
+    <!-- FILE PANEL -->
+    <div id="filePanel" class="panel {% if active_tab == 'file' %}active{% endif %}">
+      <h2>Upload Files for Malware Scan</h2>
+      <div class="upload-grid">
+        <form id="uploadForm" action="/mal" method="POST" enctype="multipart/form-data">
+          <div class="upload-box">
+            <label for="csvFile">📄 Upload CSV Logs</label>
+            <input type="file" id="csvFile" name="csvFile" accept=".csv,.xlsx" style="display: none;">
+            <button type="button" class="btn" onclick="document.getElementById('csvFile').click()">Upload CSVLogs</button>
+          </div>
+        </form>
+
+        <script>
+          document.getElementById('csvFile').addEventListener('change', function () {
+            document.getElementById('uploadForm').submit(); });
+        </script>
+
+      </div>
+      <br>
+      {% if result %}
+          <div class="prediction-result">        
+            <h3 style="display:block;">Prediction: {{ result }}</h3>
+          </div>
+          <br>
+          <img src="static/prediction_prob.png" alt="Probability">
+          <br>
+          <img src="static/feature_importances.png" alt="feature importances">
+      {% endif %}
+    </div>
+    
+
+
+
+    <!-- URL PANEL -->
+    <div id="urlPanel" class="panel {% if active_tab == 'url' %}active{% endif %}">
+      <h2>Scan a URL</h2>
+      <form action="/scan_url" method="POST">
+        <input type="text" name="url" placeholder="Enter URL to scan..." class="input-box" required>
+        <button type="submit" class="btn">Scan URL</button>
+      </form>
+      {% if url_result and active_tab == 'url' %}
+        <div class="prediction-result-url">
+          <h4>  🔎 your url : {{ scanned_url }}</h4>
+          <br>
+          <p>1. Harmless: {{ url_result.harmless }}</p>
+          <p>2. Suspicious: {{ url_result.suspicious }}</p>
+          <p>3. Malicious: {{ url_result.malicious }}</p>
+          <p>4. Undetected: {{ url_result.undetected }}</p>
+          <br>
+          {% if url_result.malicious > 0 or url_result.suspicious > 0 %}
+            <p style="color:red;">⚠️ This URL is potentially dangerous!</p>
+          {% else %}
+            <p style="color:green;">✅ This URL appears safe.</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- SEARCH PANEL -->
+    <div id="searchPanel" class="panel {% if active_tab == 'search' %}active{% endif %}">
+      <h2>Search by Hash / IP Address</h2>      
+      <form method="POST" action="/check_hash">
+        <input type="text" name="search" placeholder="Enter URL, IP, or Hash" class="input-box" required>
+        <button type="submit" class="btn">Check</button>
+      </form>      
+      {% if hash_result and active_tab=="search" %}
+        <div class="prediction-result-url">
+          {% if hash_result.valid %}
+            ✅ Valid {{ hash_result.type }}=>
+             {{ hash_result.value[0:10] }}-
+             {{ hash_result.value[10:] }}
+          {% else %}
+            ❌ Invalid Input
+          {% endif %}
+        </div>
+      {% endif %}
+      
+    </div>
+  </main>
+  
+  {% include 'chatbot.html' %}
+  <!-- Footer -->
+    <br><br><br><br><br><br>br>
+  <footer>
+    <p>&copy; 2025 TraceHunter Inc. All Rights Reserved.</p>
+  </footer>
+  <!-- JavaScript -->
+  <script>
+    function showPanel(panelId, element) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(panelId).classList.add('active');
+      element.classList.add('active');
+    }
+  </script>
+</body>
+</html>
