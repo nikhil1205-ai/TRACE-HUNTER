@@ -9,6 +9,14 @@ warnings.filterwarnings('ignore')
 scaler = joblib.load(r"D:\Project_Exibition\Trace_hunter2\app\models\StandardScaler.pkl")
 loaded_model = joblib.load(r"D:\Project_Exibition\Trace_hunter2\app\models\random_forest_model.pkl")
 
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # current file directory
+MODEL_PATH = os.path.join(BASE_DIR, "..", "models", "random_forest_model.pkl")
+Ext_Path = os.path.join(BASE_DIR, "..", "models", "StandardScaler.pkl")
+loaded_model = joblib.load(MODEL_PATH)
+scaler = joblib.load(Ext_Path)
+
+
 feature_names = [
     'pslist_nproc', 'pslist_nppid', 'pslist_avg_threads',
     'pslist_avg_handlers', 'dlllist_ndlls', 'dlllist_avg_dlls_per_proc',
