@@ -9,9 +9,14 @@ import joblib
 warnings.filterwarnings('ignore')
 
 
-model = joblib.load(r'D:\Project_Exibition\Trace_hunter2\app\models\random_forest_Network_model.pkl')
-expected_columns = joblib.load(r'D:\Project_Exibition\Trace_hunter2\app\models\model_columns_network.pkl')
+# model = joblib.load(r'D:\Project_Exibition\Trace_hunter2\app\models\random_forest_Network_model.pkl')
+# expected_columns = joblib.load(r'D:\Project_Exibition\Trace_hunter2\app\models\model_columns_network.pkl')
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # current file directory
+MODEL_PATH = os.path.join(BASE_DIR, "..", "models", "random_forest_Network_model.pkl")
+Ext_Path = os.path.join(BASE_DIR, "..", "models", "model_columns_network.pkl")
+model = joblib.load(MODEL_PATH)
+expected_columns = joblib.load(Ext_Path)
 
 # Map labels
 label_map = {0: "Benign-Safe", 1: "Attack Detected "}
